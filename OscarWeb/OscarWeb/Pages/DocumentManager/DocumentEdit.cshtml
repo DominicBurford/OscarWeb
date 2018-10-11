@@ -1,0 +1,121 @@
+﻿@page
+@using Constants
+@using Kendo.Mvc.UI
+@model DocumentEditModel
+@{
+    ViewData["Title"] = $"{ModuleNameConstants.DocumentManager} Edit";
+}
+
+<div class="breadcrumbs">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 right">
+                <a class="bread-links" href="../DocumentManager/DocumentManager"> @Model.Service.ModuleName</a> | Edit
+            </div>
+        </div>
+    </div>
+</div>
+<form method="post">
+    <div>
+        @Model.ErrorMessage
+    </div>
+    <div class="content_padder">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-lg-10 col-md-10">
+                                        <div class="panel panel-success">
+                                            <div class="panel-heading">Edit Document</div>
+                                            <div class="panel-body">
+                                                <p class="form-label">Document Description:</p>
+                                                <p><input type="text" name="document_details_description_edit" runat="server" style="width: 100%" value="@Model.DocumentDescription" /></p>
+                                                <p class="form-label">Document Category:</p>
+                                                <p>
+                                                    @(Html.Kendo().DropDownList()
+                                                                  .Name("document_details_category_edit")
+                                                                  .DataTextField("Text")
+                                                                  .DataValueField("Value")
+                                                                  .BindTo(@Model.DocumentCategories)
+                                                                  .Value(@Model.DocumentCategory)
+                                                                  .HtmlAttributes(new { style = "width: 100%" })
+                                                    )
+                                                </p>
+                                                <div class="container-fluid">
+                                                    <div class="col-lg-12 col-md-12">
+                                                        <div class="panel panel-default">
+                                                            <div class="panel-heading">Subscribers</div>
+                                                            <div class="panel-body">
+                                                                <select id="optional">
+                                                                    @if (Model != null && Model.Available != null && Model.Available.Users != null && Model.Available.Users.Any())
+                                                                    {
+                                                                        foreach (var user in Model.Available.Users)
+                                                                        {
+                                                                            if (user != null && !string.IsNullOrEmpty(user.UserName))
+                                                                            {
+                                                                                <option>@user.UserName</option>
+                                                                            }
+
+                                                                        }
+                                                                    }
+                                                                </select>
+                                                                <select id="selected" name="document_details_subscribers_edit">
+                                                                    @if (Model != null && Model.Subscribers != null && Model.Subscribers.Users != null && Model.Subscribers.Users.Any())
+                                                                    {
+                                                                        foreach (var user in Model.Subscribers.Users)
+                                                                        {
+                                                                            if (user != null && !string.IsNullOrEmpty(user.UserName))
+                                                                            {
+                                                                                <option>@user.UserName</option>
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2">
+                                        <div class="panel panel-success">
+                                            <div class="panel-heading">Options</div>
+                                            <div class="panel-body">
+                                                <button type="submit" class="toolbar-buttons btn btn-default" value="Save" name="submitSave">
+                                                    Save<br />
+                                                    <span class="fas fa-save"></span>
+                                                </button>
+                                                <button type="submit" class="toolbar-buttons btn btn-default" value="Cancel" name="submitCancel">
+                                                    Cancel<br />
+                                                    <span class="fas fa-ban"></span>
+                                                </button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    $(document).ready(function () {
+        $("#optional").kendoListBox({
+            connectWith: "selected",
+            toolbar: {
+                tools: ["transferTo", "transferFrom", "transferAllTo", "transferAllFrom"]
+            }
+        });
+
+        $("#selected").kendoListBox();
+    });
+</script>

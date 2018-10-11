@@ -1,0 +1,12 @@
+﻿@using Constants
+@using Kendo.Mvc.UI
+<div class="sidebar">
+   
+        @(
+            Html.Kendo().Menu()
+                .Name("kendomainmenu")
+                .BindTo((IEnumerable<MenuItem>)ViewData[SessionConstants.ViewKendoMainMenu])
+                .Orientation(MenuOrientation.Vertical)
+
+        )
+</div>

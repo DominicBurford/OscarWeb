@@ -1,0 +1,65 @@
+﻿@page
+@using Constants
+@model DocumentCreateFolderModel
+@{
+    ViewData["Title"] = $"{@ModuleNameConstants.DocumentManager} {@ModuleNameConstants.CreateFolder}";
+}
+
+<div class="breadcrumbs">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 right">
+                <a class="bread-links" href="../DocumentManager/DocumentManager">@ModuleNameConstants.DocumentManager</a> | @ModuleNameConstants.CreateFolder
+            </div>
+        </div>
+    </div>
+</div>
+<form method="post">
+    <div>
+        @Model.ErrorMessage
+    </div>
+    <div class="content_padder">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+                    <div class="panel panel-success">
+                        <div class="panel-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-lg-10 col-md-10">
+                                        <div class="panel panel-success">
+                                            <div class="panel-heading">Create Folder</div>
+                                            <div class="panel-body">
+                                                <p class="form-label">Folder Name:</p>
+                                                <p><input type="text" name="document_details_name_createfolder" runat="server" style="width: 100%" value="@Model.DocumentFolderName" /></p>
+                                                <p class="form-label">Folder Description:</p>
+                                                <p><input type="text" name="document_details_description_createfolder" runat="server" style="width: 100%" value="@Model.DocumentFolderDescription" /></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2">
+                                        <div class="panel panel-success">
+                                            <div class="panel-heading">Options</div>
+                                            <div class="panel-body">
+                                                <button type="submit" class="toolbar-buttons btn btn-default" value="Save" name="submitSave">
+                                                    Save<br />
+                                                    <span class="fas fa-save"></span>
+                                                </button>
+                                                <button type="submit" class="toolbar-buttons btn btn-default" value="Cancel" name="submitCancel">
+                                                    Cancel<br />
+                                                    <span class="fas fa-ban"></span>
+                                                </button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>

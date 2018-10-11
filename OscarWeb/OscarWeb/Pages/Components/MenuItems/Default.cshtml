@@ -1,0 +1,17 @@
+﻿@model Common.Models.MainMenuModels
+    
+<div class="sidebar">
+    <div class="treeview">
+        @if (Model != null && Model.MenuItems != null && Model.MenuItems.Any())
+        {
+            foreach (var menuitem in Model.MenuItems)
+            {
+                <a asp-page=@menuitem.Routing>
+                    <div class="tree">
+                        <div class=@menuitem.Icon></div>
+                    </div>
+                </a>
+            }
+        }
+    </div>
+</div>

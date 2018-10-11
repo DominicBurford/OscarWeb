@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AnalyseParams>
+  <TargetExecutable>C:\Program Files\dotnet\dotnet.exe</TargetExecutable>
+  <TargetArguments>test E:\TfsData\Build\_work\4\s\OscarWeb.Tests\OscarWeb.Tests.csproj</TargetArguments>
+  <TargetWorkingDir>E:\TfsData\Build\_work\4\s\OscarWeb.Tests\</TargetWorkingDir>
+  <Output>output.html</Output>
+  <ReportType>HTML</ReportType>
+</AnalyseParams>

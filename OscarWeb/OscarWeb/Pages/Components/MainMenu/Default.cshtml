@@ -1,0 +1,23 @@
+﻿@using Constants
+@using Kendo.Mvc.UI
+<div class="sidebar">
+    <div class="treeview">
+        @(
+            Html.Kendo().TreeView()
+                .Name("treeview")
+                .Events(events => events.Select("onSelect"))
+                .BindTo((IEnumerable<TreeViewItemModel>)ViewData[SessionConstants.ViewTopLevelMenuItems])
+        )
+    </div>
+</div>
+<script>
+    var treeview;
+
+    function onSelect(e) {
+        console.log("Selecting: " + this.text(e.node));
+    }
+    
+    $(document).ready(function() {
+        treeview = $("#treeview").data("kendoTreeView");
+    });
+</script>

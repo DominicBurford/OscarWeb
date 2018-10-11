@@ -1,0 +1,25 @@
+﻿@page
+@using Common.Models
+@using Kendo.Mvc.UI
+@model IndexModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="breadcrumbs">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-1 col-md-1"></div>
+            <div class="col-md-11 col-lg-11 right">
+                Dashboard
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content_padder">
+    <div class="container-fluid">
+        <div class="row">
+            @await Html.PartialAsync("_UnreadDocumentsPartial");
+        </div>
+    </div>
+</div>

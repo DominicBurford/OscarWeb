@@ -1,0 +1,77 @@
+﻿@page
+@using Administration.User
+@using Common.Models
+@using Constants
+@using Kendo.Mvc.UI
+@model Administration.User.UserAdminModel
+@{
+    ViewData["Title"] = @ModuleNameConstants.UserAdmin;
+}
+<div class="breadcrumbs">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 right">
+                <a class="bread-links" href="../Administration">Administration </a> | @Model.Service.ModuleName
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content_padder">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="panel panel-success">
+                                        <div class="panel-heading">Users</div>
+                                        <div class="panel-body">
+                                            @(Html.Kendo().Grid<UserModel>()
+                                                          .Name("usergrid")
+                                                          .Columns(columns =>
+                                                          {
+                                                              columns.Bound(c => c.Id).Editable("true").Width(30);
+                                                              columns.Bound(c => c.UserName).Editable("false").Width(100);
+                                                              columns.Bound(c => c.Email).Editable("false").Width(150);
+                                                              columns.Command(command =>
+                                                              {
+                                                                  command.Edit();
+                                                                  command.Destroy();
+                                                              }).Width(100);
+                                                          })
+                                                          .ToolBar(toolBar =>
+                                                          {
+                                                              toolBar.Create();
+                                                              toolBar.Save();
+                                                              toolBar.Excel();
+                                                              toolBar.Pdf();
+                                                          })
+                                                          .Editable(editable => editable.Mode(GridEditMode.InCell))
+                                                          .Pageable()
+                                                          .Sortable()
+                                                          .Scrollable()
+                                                          .HtmlAttributes(new { style = "width:100%;" })
+                                                          .DataSource(dataSource => dataSource
+                                                              .Ajax()
+                                                              .PageSize(20)
+                                                              .Events(events => events.Error("error_handler_kendo_grid"))
+                                                              .Model(model => model.Id(p => p.Id))
+                                                              .Create(update => update.Action("EditingPopup_Create", "UserGrid"))
+                                                              .Read(read => read.Action("EditingPopup_Read", "UserGrid"))
+                                                              .Update(update => update.Action("EditingPopup_Update", "UserGrid"))
+                                                              .Destroy(update => update.Action("EditingPopup_Destroy", "UserGrid"))
+                                                          )
+                                            )
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

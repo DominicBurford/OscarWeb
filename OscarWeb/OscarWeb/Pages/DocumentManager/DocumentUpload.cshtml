@@ -1,0 +1,117 @@
+﻿@page
+@using Constants
+@using DocumentManager
+@using Kendo.Mvc.UI
+@model DocumentManager.DocumentUploadModel
+@{
+    ViewData["Title"] = $"{ModuleNameConstants.DocumentManager} Upload";
+}
+
+
+<div class="breadcrumbs">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 right">
+                <a class="bread-links" href="../DocumentManager/DocumentManager"> @Model.Service.ModuleName</a> | Upload
+            </div>
+        </div>
+    </div>
+</div>
+<form method="post">
+    <div>
+        @Model.ErrorMessage
+    </div>
+    <div class="content_padder">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="container-fluid">
+                                <div class="row row-pad">
+                                    <div class="col-lg-10 col-md-10">
+                                        <div class="panel panel-success">
+                                            <div class="panel-heading">Upload Document</div>
+                                            <div class="panel-body">
+                                                <p>
+                                                    @(Html.Kendo().Upload()
+                                                                  .Name("files")
+                                                                  .HtmlAttributes(new { style = "width: 100%" })
+                                                    )
+                                                </p>
+                                                <p class="form-label">Document Description:</p>
+                                                <p><input type="text" name="document_details_description_upload" runat="server" style="width: 100%"></p>
+                                                <p class="form-label">Document Format:</p>
+                                                <p>
+                                                    @(Html.Kendo().DropDownList()
+                                                                  .Name("document_details_type_upload")
+                                                                  .DataTextField("Text")
+                                                                  .DataValueField("Value")
+                                                                  .BindTo(@Model.DocumentTypes)
+                                                                  .Value("1")
+                                                                  .HtmlAttributes(new { style = "width: 100%" })
+                                                    )
+                                                </p>
+                                                <p class="form-label">Document Category:</p>
+                                                <p>
+                                                    @(Html.Kendo().DropDownList()
+                                                                  .Name("document_details_category_upload")
+                                                                  .DataTextField("Text")
+                                                                  .DataValueField("Value")
+                                                                  .BindTo(@Model.DocumentCategories)
+                                                                  .Value("1")
+                                                                  .HtmlAttributes(new { style = "width: 100%" })
+                                                    )
+                                                </p>
+                                                <p class="form-label">Document Subscribers:</p>
+                                                <p>
+                                                    <select id="optional">
+                                                        @foreach (var user in Model.Users.Users)
+                                                        {
+                                                            <option>@user.UserName</option>
+                                                        }
+                                                    </select>
+                                                    <select id="selected" name="document_details_subscribers"></select>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-2 col-md-2">
+                                        <div class="panel panel-success">
+                                            <div class="panel-heading">Options</div>
+                                            <div class="panel-body">
+                                                <button type="submit" class="toolbar-buttons btn btn-default" value="Save" name="submitSave">
+                                                    Save<br />
+                                                    <span class="fas fa-save"></span>
+                                                </button>
+                                                <button type="submit" class="toolbar-buttons btn btn-default" value="Cancel" name="submitCancel">
+                                                    Cancel<br />
+                                                    <span class="fas fa-ban"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+<script>
+    $(document).ready(function () {
+        $("#optional").kendoListBox({
+            connectWith: "selected",
+            toolbar: {
+                tools: ["transferTo", "transferFrom", "transferAllTo", "transferAllFrom"]
+            }
+        });
+
+        $("#selected").kendoListBox();
+    });
+</script>

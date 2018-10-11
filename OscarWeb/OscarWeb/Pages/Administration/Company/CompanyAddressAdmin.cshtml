@@ -1,0 +1,56 @@
+﻿@page
+@using Common.Models
+@using Constants
+@using Kendo.Mvc.UI
+@model CompanyAddressAdminModel
+@{
+    ViewData["Title"] = ModuleNameConstants.CompanyAddressAdmin;
+}
+<div class="breadcrumbs">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 right">
+                <a class="bread-links" href="../Company/CompanyAdmin">@ModuleNameConstants.CompanyAdmin </a> | @Model.Service.ModuleName
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content_padder">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">@ModuleNameConstants.CompanyAddressAdmin</div>
+                    <div class="panel-body">
+                        @(Html.Kendo().Grid<CompanyAddressModel>()
+                          .Name("companyaddressgrid")
+                          .Columns(columns =>
+                          {
+                              columns.Bound(c => c.Id).Width(20);
+                              columns.Bound(c => c.Primary).Width(20);
+                              columns.Bound(c => c.Postcode).Width(50);
+                              columns.Bound(c => c.AddressLine1).Width(50);
+                              columns.Bound(c => c.AddressLine2).Width(50);
+                              columns.Bound(c => c.AddressLine3).Width(50);
+                              columns.Bound(c => c.AddressLine4).Width(50);
+                              columns.Bound(c => c.AddressLine5).Width(50);
+                          })
+                          .Pageable()
+                          .Sortable()
+                          .Scrollable()
+                          .Filterable()
+                          .HtmlAttributes(new { style = "width:100%;" })
+                          .DataSource(dataSource => dataSource
+                              .Ajax()
+                              .PageSize(20)
+                              .Events(events => events.Error("error_handler_kendo_grid"))
+                              .Model(model => model.Id(p => p.Id))
+                              .Read(read => read.Action("EditingPopup_Read", "CompanyAddress"))
+                          )
+                        )
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

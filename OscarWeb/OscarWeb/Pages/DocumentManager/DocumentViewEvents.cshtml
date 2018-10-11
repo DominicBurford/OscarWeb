@@ -1,0 +1,57 @@
+﻿@page
+@using Common.Models
+@using Constants
+@using Kendo.Mvc.UI
+@model DocumentViewEventsModel
+@{
+    ViewData["Title"] = $"{ModuleNameConstants.DocumentManager} View Events";
+}
+<div class="breadcrumbs">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 right">
+                <a class="bread-links" href="../DocumentManager/DocumentManager"> @Model.Service.ModuleName</a> | View Events
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content_padder">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">View Events</div>
+                    <div class="panel-body">
+                        @(Html.Kendo().Grid<DocumentEventModel>()
+                          .Name("documenteventsgrid")
+                          .Columns(columns =>
+                          {
+                              columns.Bound(c => c.DocumentName).Width(100);
+                              columns.Bound(c => c.Action).Width(80);
+                              columns.Bound(c => c.UserName).Width(100);
+                              columns.Bound(c => c.Created).Width(50);
+                          })
+                          .ToolBar(toolBar =>
+                          {
+                              toolBar.Excel();
+                              toolBar.Pdf();
+                          })
+                          .Pageable()
+                          .Sortable()
+                          .Scrollable()
+                          .Filterable()
+                          .HtmlAttributes(new { style = "width:100%;" })
+                          .DataSource(dataSource => dataSource
+                              .Ajax()
+                              .PageSize(20)
+                              .Events(events => events.Error("error_handler_kendo_grid"))
+                              .Model(model => model.Id(p => p.Id))
+                              .Read(read => read.Action("EditingPopup_Read", "ViewDocumentEvents"))
+                          )
+                        )
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

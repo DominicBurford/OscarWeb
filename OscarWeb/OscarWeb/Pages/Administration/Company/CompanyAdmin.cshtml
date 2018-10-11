@@ -1,0 +1,88 @@
+﻿@page
+@using Common.Models
+@using Constants
+@using Kendo.Mvc.UI
+@model Administration.Company.CompanyAdminModel
+@{
+    ViewData["Title"] = ModuleNameConstants.CompanyAdmin;
+}
+
+<div class="breadcrumbs">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 right">
+                <a class="bread-links" href="../Administration">@ModuleNameConstants.Administration </a> | @Model.Service.ModuleName
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content_padder">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="panel panel-success">
+                                        <div class="panel-heading">Companies</div>
+                                        <div class="panel-body">
+                                            @(Html.Kendo().Grid<CompanyModel>()
+                                                  .Name("companygrid")
+                                                  .Columns(columns =>
+                                                  {
+                                                      columns.Bound(c => c.Id).Editable("true").Width(30);
+                                                      columns.Bound(c => c.Name).Editable("false").Width(100);
+                                                      columns.Bound(c => c.StorageContainerName).Editable("false").Width(150);
+                                                      columns.Command(command =>
+                                                      {
+                                                          command.Edit();
+                                                          command.Destroy();
+                                                          command.Custom("Address").Click("addressClicked");
+                                                      }).Width(100);
+                                                  })
+                                                  .ToolBar(toolBar =>
+                                                  {
+                                                      toolBar.Create();
+                                                      toolBar.Save();
+                                                      toolBar.Excel();
+                                                      toolBar.Pdf();
+                                                  })
+                                                  .Editable(editable => editable.Mode(GridEditMode.InCell))
+                                                  .Pageable()
+                                                  .Sortable()
+                                                  .Scrollable()
+                                                  .Filterable()
+                                                  .HtmlAttributes(new { style = "width:100%;" })
+                                                  .DataSource(dataSource => dataSource
+                                                      .Ajax()
+                                                      .PageSize(20)
+                                                      .Events(events => events.Error("error_handler_kendo_grid"))
+                                                      .Model(model => model.Id(p => p.Id))
+                                                      .Create(update => update.Action("EditingPopup_Create", "CompanyGrid"))
+                                                      .Read(read => read.Action("EditingPopup_Read", "CompanyGrid"))
+                                                      .Update(update => update.Action("EditingPopup_Update", "CompanyGrid"))
+                                                      .Destroy(update => update.Action("EditingPopup_Destroy", "CompanyGrid"))
+                                                  )
+                                                  )
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    //event handler for the Details button on the grid
+    function addressClicked(e) {
+        viewCompanyAddresses(e);
+    }
+</script>
+

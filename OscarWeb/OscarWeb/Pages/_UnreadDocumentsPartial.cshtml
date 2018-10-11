@@ -1,0 +1,98 @@
+﻿@page
+@using Common.Models
+@using Kendo.Mvc.UI
+@model IndexModel
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<div class="col-lg-12 col-md-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">Documents</div>
+        <div class="panel-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-9 col-md-9">
+                        <div class="panel panel-success">
+                            <div class="panel-heading">Your Unread Documents</div>
+                            <div class="panel-body">
+                                @(Html.Kendo().Grid<DocumentUnreadModel>()
+                                  .Name("unreaddocumentsgrid")
+                                  .Columns(columns =>
+                                  {
+                                      columns.Bound(c => c.Id).Width(30);
+                                      columns.Bound(c => c.UploadedByUsername).Width(50);
+                                      columns.Bound(c => c.Name).Width(80);
+                                      columns.Bound(c => c.Description).Width(80);
+                                  })
+                                  .Pageable()
+                                  .Sortable()
+                                  .Scrollable()
+                                  .Filterable()
+                                  .Selectable(selectable => selectable
+                                      .Type(GridSelectionType.Row))
+                                  .Events(events => events
+                                      .Change("onChange_UnreadDocuments")
+                                  )
+                                  .HtmlAttributes(new { style = "width:100%;" })
+                                  .DataSource(dataSource => dataSource
+                                      .Ajax()
+                                      .PageSize(20)
+                                      .Events(events =>
+                                      {
+                                          events.Error("error_handler_kendo_grid");
+                                          events.RequestEnd("onRequestEnd_UnreadDocuments");
+                                      })
+                                      .Model(model => model.Id(p => p.Id))
+                                      .Read(read => read.Action("EditingPopup_Read", "ViewUnreadDocuments"))
+                                  )
+                                )
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3">
+                        <div class="panel panel-success">
+                            <div class="panel-heading">Options</div>
+                            <div class="panel-body">
+                                <form asp-page-handler="Download" method="post">
+                                    <button type="submit" class="toolbar-buttons btn btn-default" value="Download" id="submitDownload" name="submitDownload" disabled="disabled">
+                                        Download<br />
+                                        <span class="fas fa-save"></span>
+                                    </button>
+                                    <input id="unreaddocument_download" type="hidden" name="currentDocumentId" value="0" />
+                                </form>
+                                @*<form method="post">
+                                        <button type="submit" class="toolbar-buttons btn btn-default" value="Download" id="submitDownload" name="submitDownload" disabled="disabled">
+                                            Download<br />
+                                            <span class="fas fa-save"></span>
+                                        </button>
+                                        <input id="unreaddocument_download" type="hidden" name="currentDocumentId" value="0" />
+                                    </form>*@
+                                <form asp-page-handler="Details" method="post">
+                                    <button type="submit" class="toolbar-buttons btn btn-default" value="Details" id="submitDetails" name="submitDetails" disabled="disabled">
+                                        Details<br />
+                                        <span class="fas fa-file-invoice"></span>
+                                    </button>
+                                    <input id="unreaddocument_details" type="hidden" name="currentDocumentId" value="0" />
+                                </form>
+                                <form method="post">
+                                    <button type="button" class="toolbar-buttons btn btn-default" value="Refresh" id="refreshDocuments" name="refreshDocuments">
+                                        Refresh<br />
+                                        <span class="fas fa-sync"></span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        //commented out but left as an example of making a POST request to an ASP.NET Core page handler
+        //see the method submitDownload() in site.js
+        //$("#submitDownload").click(function () { submitDownload(); });
+        $("#refreshDocuments").click(function () { refreshUnreadDocuments(); });
+    });
+</script>

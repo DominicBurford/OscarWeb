@@ -1,0 +1,142 @@
+﻿  @using Kendo.Mvc.UI
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] | Oscar 365</title>
+    <link rel="icon" href="~/images/favicon.ico">
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/css/site.min.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="~/css/site.min.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    </environment>
+    <environment include="Development">
+        <script src="~/js/jquery-3.3.1.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src="~/lib/kendo-ui/js/kendo.all.min.js"></script>
+        <script src="~/lib/kendo-ui/js/kendo.aspnetmvc.min.js"></script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/jquery-3.3.1.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+        </script>
+        <script src="https://kendo.cdn.telerik.com/2017.2.621/js/kendo.all.min.js"
+                asp-fallback-src="~/lib/kendo-ui/js/kendo.all.min.js"
+                asp-fallback-test="window.kendo">
+        </script>
+        <script src="https://kendo.cdn.telerik.com/2017.2.621/js/kendo.aspnetmvc.min.js"
+                asp-fallback-src="~/lib/kendo-ui/js/kendo.aspnetmvc.min.js"
+                asp-fallback-test="kendo.data.transports['aspnetmvc-ajax']">
+        </script>
+        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+        </script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+</head>
+
+<body>
+    <div class="d-none d-lg-block">
+        <!-- #### TOPBAR #### -->
+        <div class="topbar">
+            <div class="row">
+                <div class="col-md-1 center">
+                    <a href="/">
+                        <div class="logo">
+                            <img src="~/images/logo.ico">
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-10"></div>
+                <div class="col-md-1 right">
+                    <a onclick="openProfileMenu ()" id="openProfileMenu">
+                        <div class="profile">
+                            <img src="~/images/user-icon.png">
+                        </div>
+                    </a>
+                    <a onclick="closeProfileMenu ()" id="closeProfileMenu">
+                        <div class="profile">
+                            <img src="~/images/user-icon.png">
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- #### TOPBAR #### -->
+        <!-- #### SIDEBAR #### -->
+        @await Component.InvokeAsync("KendoMenu", new { mainmenu = new List<MenuItem>() })
+        <!-- #### SIDEBAR #### -->
+        <!-- #### PROFILE #### -->
+        <div class="ProfileMenu center" id="ProfileMenu">
+            <div class="Profileoptions">
+                <a href="mailto:support@oscar365.co.uk">
+                    <div class="profile_tree_option">
+                        <span class="fa fa-envelope-open"></span>
+                        Support
+                    </div>
+                </a>
+            </div>
+            <div class="Profileoptions">
+                <a asp-area="" asp-controller="Account" asp-action="SignOut">
+                    <div class="profile_tree_option">
+                        <span class="fa fa-sign-out-alt"></span>
+                        Sign Out
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!-- #### PROFILE #### -->
+        <!-- #### CONTENT #### -->
+        <div class="content_wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12 col-lg-12">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- #### CONTENT #### -->
+
+    </div>
+
+ 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            window.onload = function () {
+                //call the heartbeat every 5 minutes
+                setInterval("KeepSessionAlive()", 300000);
+            }
+        });
+    </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

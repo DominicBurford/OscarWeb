@@ -1,0 +1,79 @@
+﻿@page
+@using Administration
+@using Common.Models
+@using Constants
+@using Kendo.Mvc.UI
+@model Administration.AdministrationModel
+@{
+    ViewData["Title"] = @ModuleNameConstants.Administration;
+}
+    <style>
+        .demo-section {
+            position: relative;
+        }
+
+        .demo-section ul {
+            font-size: 11px;
+            margin: 63px 30px 0 0;
+            padding: 30px;
+            position: absolute;
+            right: 0;
+            top: 0;
+            text-transform: uppercase;
+            width: 146px;
+            height: 94px;
+        }
+    </style>
+<div class="breadcrumbs">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-2 col-md-2"></div>
+            <div class="col-md-10  col-lg-10 right">
+                @Model.Service.ModuleName
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content_padder">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4">
+                                    <div class="panel panel-success">
+                                        <div class="panel-heading">Document Statistics</div>
+                                        <div class="panel-body">
+                                          &nbsp;
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4">
+                                    <div class="panel panel-success">
+                                        <div class="panel-heading">User Activity</div>
+                                        <div class="panel-body">
+                                         &nbsp;
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4">
+                                    <div class="panel panel-success">
+                                        <div class="panel-heading">Site Stats</div>
+                                        <div class="panel-body">
+                                         &nbsp;
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+

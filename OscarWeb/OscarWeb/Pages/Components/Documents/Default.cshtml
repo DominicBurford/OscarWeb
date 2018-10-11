@@ -1,0 +1,16 @@
+﻿@using Constants
+@using Kendo.Mvc.UI
+@(
+    Html.Kendo().TreeView()
+        .Name("documentview")
+        .Events(events => events.Select("onSelect_DocumentManagerItem"))
+        .BindTo((IEnumerable<TreeViewItemModel>) ViewData[SessionConstants.ViewDocumentTreeMenu])
+        .DragAndDrop(true)
+      )
+<script>
+    var documentview;
+    $(document).ready(function() {
+        documentview = $("#documentview").data("kendoTreeView");
+        documentview.bind("drop", tree_drop);
+    });
+</script>
